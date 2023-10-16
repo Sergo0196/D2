@@ -16,7 +16,7 @@ def currency(value, code='rub'):
     postfix = CURRENCIES_SIMBOLS[code]
     return f'{value} {postfix}'
 
-# @register.filter()
+
 
 
 
