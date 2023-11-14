@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from datetime import datetime
@@ -49,7 +49,8 @@ class ProductDetail(DetailView):
     # Название объекта, в котором будет выбранный пользователем продукт
     context_object_name = 'product'
 
-class ProductCreate(CreateView):
+class ProductCreate(LoginRequiredMixin,CreateView):
+    raise_exception = True
     form_class = ProductForm
     model = Product
     template_name = 'product_edit.html'
