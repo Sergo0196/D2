@@ -165,4 +165,13 @@ EMAIL_HOST_PASSWORD = 'etkgpbwiogxszrpm'
 EMAIL_USE_TLS = False
 EMAIL_USE_SSL = True
 DEFAULT_FROM_EMAIL = "SergoFire911@yandex.ru"
+SERVER_EMAIL = "SergoFire911@yandex.ru"
+MANAGERS = (
+    ('Sergey', 'seregey@mail.ru'),
+    ('Andrey', 'andrey@mail.ru')
+)
+ADMINS = (
+    ('Sergey', 'seregpets.ru@mail.ru'),
+    ('Anton', 'anton@mail.ru')
+)
 

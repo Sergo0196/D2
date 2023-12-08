@@ -3,6 +3,7 @@ from django.contrib.auth.models import User, Group
 from django.contrib.auth.forms import UserCreationForm
 from allauth.account.forms import SignupForm
 from django.core.mail import send_mail, EmailMultiAlternatives
+from django.core.mail import mail_managers, mail_admins
 
 
 class SignUpForm(UserCreationForm):
@@ -39,6 +40,14 @@ class CustomSignupForm(SignupForm):
         )
         msg.attach_alternative(html, 'text/html')
         msg.send()
+        mail_managers(
+            subject='Новый пользователь!',
+            message=f'Пользователь {user.username} зарегестрировался на сайте'
+        )
+        mail_admins(
+            subject='Новый пользователь!',
+            message=f'Пользователь {user.username} зарегестрировался на сайте'
+        )
         return user
 
 
