@@ -2,9 +2,14 @@ from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMix
 from django.urls import reverse_lazy
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from datetime import datetime
-from .models import Product
+from .models import Product, Category, Subscription
 from .filters import ProductFilter
 from .forms import ProductForm
+from django.contrib.auth.decorators import login_required
+from django.db.models import Exists, OuterRef
+from django.shortcuts import render
+from django.views.decorators.csrf import csrf_protect
+
 
 
 class ProductsList(ListView):
@@ -67,4 +72,22 @@ class ProductDelete(PermissionRequiredMixin, DeleteView, ):
     model = Product
     template_name = 'product_delete.html'
     success_url = reverse_lazy('product_list')
+
+@login_required
+@csrf_protect
+def subscriptions(request):
+    if request.method == 'POST':
+        category_id = request.POST.get('category_id')
+        category = Category.objects.get(id=category_id)
+        action = request.POST.get('action')
+
+        if action == 'subscribe':
+            Subscription.objects.create(user=request.user, category=category)
+        elif action == 'unsubscribe':
+            Subscription.objects.filter(
+                user=request.user,
+                category=OuterRef('pk')
+            ).delete()
+
+
 
