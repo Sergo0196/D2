@@ -75,6 +75,8 @@ class ProductDelete(PermissionRequiredMixin, DeleteView, ):
 
 @login_required
 @csrf_protect
+@login_required
+@csrf_protect
 def subscriptions(request):
     if request.method == 'POST':
         category_id = request.POST.get('category_id')
@@ -86,8 +88,23 @@ def subscriptions(request):
         elif action == 'unsubscribe':
             Subscription.objects.filter(
                 user=request.user,
-                category=OuterRef('pk')
+                category=category,
             ).delete()
+
+    categories_with_subscriptions = Category.objects.annotate(
+        user_subscribed=Exists(
+            Subscription.objects.filter(
+                user=request.user,
+                category=OuterRef('pk'),
+            )
+        )
+    ).order_by('name')
+    return render(
+        request,
+        'subscriptions.html',
+        {'categories': categories_with_subscriptions},
+    )
+
 
 
 
