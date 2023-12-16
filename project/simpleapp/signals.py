@@ -12,10 +12,10 @@ def product_created(instance, created, **kwargs):
         return
 
     emails = User.objects.filter(
-        subscription__category=instance.category
+        subscriptions__category=instance.category
     ).values_list('email', flat=True)
 
-    subject = f'Новый товаар в категории {instance.category}'
+    subject = f'Новый товар в категории {instance.category}'
 
     text_content = (
         f'Товар: {instance.name}/n'
@@ -26,7 +26,7 @@ def product_created(instance, created, **kwargs):
     html_content = (
         f'Товар: {instance.name}<br>'
         f'Цена: {instance.price}<br><br>'
-        f'<a href="http://127.0.0.1{instance.get_ubsolute_url()}">'
+        f'<a href="http://127.0.0.1{instance.get_absolute_url()}">'
         f'Ссылка на товар</a>'
     )
     for email in emails:

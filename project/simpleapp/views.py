@@ -75,8 +75,6 @@ class ProductDelete(PermissionRequiredMixin, DeleteView, ):
 
 @login_required
 @csrf_protect
-@login_required
-@csrf_protect
 def subscriptions(request):
     if request.method == 'POST':
         category_id = request.POST.get('category_id')

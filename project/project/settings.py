@@ -46,7 +46,8 @@ INSTALLED_APPS = [
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
-    'allauth.socialaccount.providers.yandex'
+    'allauth.socialaccount.providers.yandex',
+    'django_apscheduler'
 
 ]
 
@@ -168,10 +169,11 @@ DEFAULT_FROM_EMAIL = "SergoFire911@yandex.ru"
 SERVER_EMAIL = "SergoFire911@yandex.ru"
 MANAGERS = (
     ('Sergey', 'seregey@mail.ru'),
-    ('Andrey', 'andrey@mail.ru')
+    ('Andrey', 'andrey@mail.ru'),
+    ('Sergey', 'seregpets.ru@mail.ru')
 )
 ADMINS = (
-    ('Sergey', 'seregpets.ru@mail.ru'),
+    ('Sergey', 'seregpets@mail.ru'),
     ('Anton', 'anton@mail.ru')
 )
 
